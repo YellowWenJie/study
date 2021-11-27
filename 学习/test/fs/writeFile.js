@@ -33,3 +33,4 @@ function writefs(path,content) {
  }
  writeList()
  
+module.exports = {writefs}
