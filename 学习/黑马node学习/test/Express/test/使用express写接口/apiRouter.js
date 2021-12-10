@@ -30,5 +30,33 @@ router.delete('/delete', (req, res) => {
   })
 })
 
+//将用户信息保存到session中
+router.post('/session', (req, res) => {
+  if (req.body.username !== 'admin' || req.body.password !== '123456') {
+    return res.send({ status: 1, msg: '登录失败', body })
+
+  } else {
+    //登录成功后把用户信息保存到session中
+    req.session.user = req.body//用户信息
+    req.session.islogin = true //用户的登录信息
+    return res.send({ status: 0, msg: '登录成功' })
+
+  }
+})
+
+//获取用户姓名的接口
+router.get('/username', (req, res) => {
+  if (!req.session.islogin) {
+    return res.send({ status: 1, msg: '获取用户姓名失败' })
+  } else {
+    return res.send({ status: 0, msg: '获取用户姓名成功', username: req.session.user.username })
+  }
+})
+
+//清空session信息
+router.post('/logout', (req, res) => {
+  req.session.destroy();
+  res.send({ status: 0, msg: '清空session信息成功' })
+})
 
 module.exports = router;

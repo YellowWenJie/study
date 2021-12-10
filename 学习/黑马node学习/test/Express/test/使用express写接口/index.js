@@ -1,10 +1,23 @@
 const express = require('express');
 const app = express();
+const router = require('./apiRouter');
 const cors = require('cors')
+const session = require('express-session')
+
+
+
 //配置解析表单数据的中间件(post的body)
 app.use(express.urlencoded({ extended: false }))
-//导入路由模块
-const router = require('./apiRouter');
+
+//配置session中间件
+app.use(
+  session({
+    secret: 'itheima',
+    resave: false,
+    saveUninitialized: true,
+  })
+)
+
 
 //jsonp解决跨域问题
 //必须在配置cors中间件之前，配置jsonp的接口
