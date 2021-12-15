@@ -16,7 +16,7 @@ app.use((req, res, next) => {
   res.cc = function (err, status = 1) {
     res.send({
       status,
-      err: err instanceof Error ? err.message : err
+      message: err instanceof Error ? err.message : err
     });
   };
   next();
@@ -39,6 +39,14 @@ app.use("/api", userRouter);
 //导入用户信息模块
 const userinforRouter = require("./router/userinfo");
 app.use("/my", userinforRouter);
+// 导入并使用文章分类路由模块
+const artCateRouter = require("./router/artcate");
+app.use("/my/article", artCateRouter);
+// 导入并使用文章路由模块
+const articleRouter = require("./router/article");
+app.use("/my/article", articleRouter);
+// 托管静态资源文件
+app.use("/uploads", express.static("./uploads"));
 
 // 身份认证错误中间件
 app.use(function (err, req, res, next) {
