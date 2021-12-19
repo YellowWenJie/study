@@ -1,7 +1,7 @@
 {
-  "name": "vue",
+  "name": "studyvue",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "",
   "author": "黄文杰 <1606354739@qq.com>",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "nanoid": "^3.1.30",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
