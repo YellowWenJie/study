@@ -727,3 +727,78 @@ export default requests;
    ```
 
    
+
+* home组件使用vuex获取数据
+
+```javascript
+//home
+import { reqCategoryList } from "@/api";
+const state = {
+  categoryList: []
+};
+//actions可以书写自己的业务逻辑，最后提交到mutations
+const actions = {
+  //通过api里面的接口函数调用，向服务器发请求
+  async categoryList({ commit }) {
+    let result = await reqCategoryList();
+    if (result.code == 200) {
+      commit("CATEGORYLIST", result.data);
+    }
+  }
+};
+//mutations修改state的唯一手段
+const mutations = {
+  CATEGORYLIST(state, categoryList) {
+    state.categoryList = categoryList;
+    console.log(categoryList);
+  }
+};
+//getters理解为计算属性
+const getters = {};
+export default {
+  namespaced: true,
+  state,
+  actions,
+  mutations,
+  getters
+};
+```
+
+```javascript
+import Vue from "vue";
+//引入vuex
+import Vuex from "vuex";
+
+Vue.use(Vuex);
+import home from "./home";
+import search from "./search";
+
+export default new Vuex.Store({
+  modules: {
+    home
+  }
+});
+```
+
+```javascript
+//组件中使用
+<script>
+import { mapState } from "vuex";
+export default {
+  name: "TypeNav",
+  //组件挂载完毕，向服务器发起请求
+  mounted() {
+    //通知Vuex发请求，获取数据，存储于仓库中
+    this.$store.dispatch("home/categoryList");
+  },
+  computed: {
+    ...mapState("home", {
+      categoryList: (state) => {
+        console.log(state);
+      },
+    }),
+  },
+};
+</script>
+```
+

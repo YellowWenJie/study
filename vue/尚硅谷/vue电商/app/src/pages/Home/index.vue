@@ -1,13 +1,12 @@
 <template>
   <div class="home">
-    <!-- <TypeNav />
+    <TypeNav />
     <ListContainer />
     <Recommend />
     <Rank />
     <Like />
     <Floor />
-    <Brand />-->
-    {{count}}
+    <Brand />
   </div>
 </template>
 
@@ -28,9 +27,7 @@ export default {
     Floor,
     Brand,
   },
-  computed: {
-    ...mapState("a", ["count"]),
-  },
+  computed: {},
 };
 </script>
 
