@@ -25,7 +25,7 @@ target="_blank" 跳转到新页面
 
 # 笔记
 
-#### 项目的其他配置
+#### 1、项目的其他配置
 
 1. 项目运行起来让浏览器自动打开
 
@@ -68,7 +68,7 @@ target="_blank" 跳转到新页面
 
    
 
-#### 非路由组件Header与Footer业务
+#### 2、非路由组件Header与Footer业务
 
 
 
@@ -106,7 +106,7 @@ target="_blank" 跳转到新页面
 
      
 
-#### 配置路由
+#### 3、配置路由
 
 1. 创建router文件新建index.js，导出的一定要是routes
 
@@ -159,7 +159,7 @@ target="_blank" 跳转到新页面
 * $router：一般进行编程式导航进行路由跳转
 * $route： 一般获取路由信息（name path params等）
 
-#### Footer的显示与隐藏，以及路由的使用
+#### 4、Footer的显示与隐藏，以及路由的使用
 
 1. v-show方法
 
@@ -379,7 +379,7 @@ target="_blank" 跳转到新页面
 
 
 
-#### 多次执行相同的push问题
+#### 5、多次执行相同的push问题
 
 * 多次执行相同的push问题，控制台会出现警告
   例如：使用this.$router.push({name:‘Search’,params:{keyword:"…"||undefined}})时，如果多次执行相同的push，控制台会出现警告。
@@ -412,7 +412,7 @@ VueRouter.prototype.push = function (location,resolve,reject){
 }
 ```
 
-#### 定义全局组件
+#### 6、定义全局组件
 
 * 我们的三级联动组件是全局组件，全局的配置都需要在main.js中配置
 
@@ -433,3 +433,297 @@ Vue.component(TypeNav.name,TypeNav);
 </div>
 </template>
 ```
+
+#### 7、axios二次封装
+
+1. 安装axios：
+
+   ```
+   npm install --save axios  
+   ```
+
+2. 新建api文件夹创建request.js
+
+```javascript
+//axios进行二次封装
+import axios from "axios";
+
+//1.利用axios对象的方法create，去创建一个axios实例
+//2.request就是axios，只不过稍微配置一下
+const requests = axios.create({
+  //配置对象
+  //基础路径，发送请求的时候，路径当中会出现api
+  baseURL: "/api",
+  //代表请求超时的时间
+  timeout: 5000
+});
+
+//请求拦截器：在发请求之前，请求拦截器可以检测到，可以在请求发出去之后做一些事情
+requests.interceptors.request.use(config => {
+  //config:配置对象，对象里面有一个属性很重要，headers请求头
+  return config;
+});
+
+//响应拦截器
+requests.interceptors.response.use(
+  res => {
+    //成功的回调：服务器相应数据回来以后，响应拦截器可以检测到，可以做一些事情
+    return res.data;
+  },
+  error => {
+    //响应失败的回调函数
+    return Promise.reject(new Error("faile"));
+  }
+);
+
+export default requests;
+```
+
+3. axios更多可以参考文档
+
+* npm：https://www.npmjs.com/package/axios
+* github：https://github.com/axios/axios
+
+#### 8、接口统一管理
+
+1. api文件夹新建index.js用来对API进行统一管理
+
+   ```javascript
+   //对API进行统一管理
+   import requests from "./request";
+   
+   //三级联动接口
+   //  /api/product/getBaseCategoryList  get  无参数
+   export default reqCategoryList = () => {
+     //发请求:axios 发请求返回的都是Promise对象
+     return requests({ url: "/product/getBaseCategoryList", method: "get" });
+   };
+   ```
+
+2. 跨域问题：
+
+   * 新建vue.config.js
+
+   ```javascript
+   module.exports = {
+     //关闭exlint
+     lintOnSave: false,
+     //代理跨域
+     devServer: {
+       proxy: {
+         "/api": {
+           target: "http://39.98.123.211"
+           // pathRewrite: { "^/api": "" }
+         }
+       }
+     }
+   };
+   
+   ```
+
+#### 9、nprogress进度条插件
+
+1. 安装：
+
+   ```javascript
+   npm install --save nprogress
+   ```
+
+2. 使用方法：
+
+   * 在requrst.js中配置
+
+   ```javascript
+   //axios进行二次封装
+   import axios from "axios";
+   import nprogress from "nprogress";
+   //nprogress的start()进度条开始，done()进度条结束
+   // 引入nprogress进度条样式
+   import "nprogress/nprogress.css";
+   
+   //1.利用axios对象的方法create，去创建一个axios实例
+   //2.request就是axios，只不过稍微配置一下
+   const requests = axios.create({
+     //配置对象
+     //基础路径，发送请求的时候，路径当中会出现api
+     baseURL: "/api",
+     //代表请求超时的时间
+     timeout: 5000
+   });
+   
+   //请求拦截器：在发请求之前，请求拦截器可以检测到，可以在请求发出去之后做一些事情
+   requests.interceptors.request.use(config => {
+     //config:配置对象，对象里面有一个属性很重要，headers请求头
+     //进度条开始
+     nprogress.start();
+     return config;
+   });
+   
+   //响应拦截器
+   requests.interceptors.response.use(
+     res => {
+       //成功的回调：服务器相应数据回来以后，响应拦截器可以检测到，可以做一些事情
+       //进度条结束
+       nprogress.done();
+       return res.data;
+     },
+     error => {
+       //响应失败的回调函数
+       return Promise.reject(new Error("faile"));
+     }
+   );
+   
+   export default requests;
+   
+   ```
+
+#### 10、vuex
+
+1. 安装
+
+   * ```
+     npm install --save vuex
+     ```
+
+2. vuex基本使用：
+
+   * vuex：https://vuex.vuejs.org/zh/
+     * state：用一个对象就包含了全部的应用层级状态
+     * mutations：更改 Vuex 的 store 中的状态的唯一方法是提交 mutation
+     * actions：Action 提交的是 mutation，而不是直接变更状态，可以包含任意异步操作
+     * getters：Vuex 允许我们在 store 中定义“getter”（可以认为是 store 的计算属性）。就像计算属性一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算。
+     * modules：Vuex 允许我们将 store 分割成**模块（module）**
+   * 新建store文件创建index.js
+
+   ```javascript
+   import Vue from "vue";
+   //引入vuex
+   import Vuex from "vuex";
+   
+   Vue.use(Vuex);
+   //state仓库存储的地方
+   const state = {};
+   //actions可以书写自己的业务逻辑，最后提交到mutations
+   const actions = {};
+   //mutations修改state的唯一手段
+   const mutations = {};
+   //getters理解为计算属性
+   const getters = {};
+   export default new Vuex.Store({
+     state,
+     actions,
+     mutations,
+     getters
+   });
+   ```
+
+   * main.js中使用
+
+   ```javascript
+   import Vue from "vue";
+   import App from "./App.vue";
+   import router from "@/router";
+   import store from "@/store";
+   
+   import { reqCategoryList } from "@/api/index";
+   
+   import TypeNav from "@/pages/Home/TypeNav";
+   Vue.component(TypeNav.name, TypeNav);
+   Vue.config.productionTip = false;
+   reqCategoryList();
+   new Vue({
+     render: h => h(App),
+     router,
+     store
+   }).$mount("#app");
+   
+   ```
+
+   * 使用
+
+   ```vue
+   <template>
+     <div class="home">
+       <h1>{{count}}</h1>
+     </div>
+   </template>
+   
+   <script>
+   import { mapState } from "vuex";
+   export default {
+     components: {},
+     computed: {
+       ...mapState(["count"]),
+     },
+   };
+   </script>
+   
+   <style lang="less" scoped>
+   </style>
+   ```
+
+   * vue模块式开发：
+
+   ```javascript
+   //home
+   const state = {
+     count: 1
+   };
+   //actions可以书写自己的业务逻辑，最后提交到mutations
+   const actions = {};
+   //mutations修改state的唯一手段
+   const mutations = {};
+   //getters理解为计算属性
+   const getters = {};
+   export default {
+     namespaced: true,
+     state,
+     actions,
+     mutations,
+     getters
+   };
+   
+   ```
+
+   ```javascript
+   import Vue from "vue";
+   //引入vuex
+   import Vuex from "vuex";
+   
+   Vue.use(Vuex);
+   import home from "./home";
+   import search from "./search";
+   
+   export default new Vuex.Store({
+     modules: {
+       a: home,
+       b: search
+     }
+   });
+   
+   ```
+
+   ```vue
+   <template>
+     <div class="home">
+   
+       {{count}}
+     </div>
+   </template>
+   
+   <script>
+   
+   import { mapState } from "vuex";
+   export default {
+   
+     computed: {
+       ...mapState("a", ["count"]),
+     },
+   };
+   </script>
+   
+   <style lang="less" scoped>
+   </style>
+   ```
+
+   
