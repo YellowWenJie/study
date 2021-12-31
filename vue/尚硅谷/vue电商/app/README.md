@@ -1,7 +1,9 @@
 app
 
-![img](https://img-blog.csdnimg.cn/6a311bfa28334b4f9471db567b6eabca.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASFVBTkdXRU5KSUU2NjY=,size_20,color_FFFFFF,t_70,g_se,x_16)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+![img](https://img-blog.csdnimg.cn/6a311bfa28334b4f9471db567b6eabca.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASFVBTkdXRU5KSUU2NjY=,size_20,color_FFFFFF,t_70,g_se,x_16)
+
 <div align="center">
+
 [![](https://img.shields.io/badge/Windows-11-2376bc?style=flat-square&logo=windows&logoColor=ffffff)](https://www.microsoft.com/windows/get-windows-10)
 [![](https://img.shields.io/badge/-JavaScript-f7e018?style=flat-square&logo=javascript&logoColor=white)](https://www.ecma-international.org/)
 [![](https://img.shields.io/badge/-HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](https://html.spec.whatwg.org/)
@@ -934,32 +936,42 @@ changeIndex: throttle(function (index) {
           <div class="all-sort-list2" @click="goSearch">
             <div
               class="item"
-              v-for="(c1,index) in categoryList"
+              v-for="(c1, index) in categoryList"
               :key="c1.categoryId"
-              :class="{cur:currentIndex==index}"
+              :class="{ cur: currentIndex == index }"
             >
               <h3 @mouseenter="changeIndex(index)">
                 <a
                   :data-categoryName="c1.categoryName"
                   :data-category1Id="c1.categoryId"
-                >{{c1.categoryName}}</a>
+                  >{{ c1.categoryName }}</a
+                >
               </h3>
               <!-- 二三级分类 -->
-              <div class="item-list clearfix" :style="{display:currentIndex==index}">
-                <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
+              <div
+                class="item-list clearfix"
+                :style="{ display: currentIndex == index }"
+              >
+                <div
+                  class="subitem"
+                  v-for="c2 in c1.categoryChild"
+                  :key="c2.categoryId"
+                >
                   <dl class="fore">
                     <dt>
                       <a
                         :data-categoryName="c2.categoryName"
                         :data-category2Id="c2.categoryId"
-                      >{{c2.categoryName}}</a>
+                        >{{ c2.categoryName }}</a
+                      >
                     </dt>
                     <dd>
                       <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
                         <a
                           :data-categoryName="c3.categoryName"
                           :data-category3Id="c3.categoryId"
-                        >{{c3.categoryName}}</a>
+                          >{{ c3.categoryName }}</a
+                        >
                       </em>
                     </dd>
                   </dl>
@@ -983,7 +995,7 @@ export default {
   name: "TypeNav",
   data() {
     return {
-      currentIndex: -1,
+      currentIndex: -1
     };
   },
   methods: {
@@ -1015,7 +1027,7 @@ export default {
         //路由跳转
         this.$router.push(location);
       }
-    },
+    }
   },
   //组件挂载完毕，向服务器发起请求
   mounted() {
@@ -1024,10 +1036,9 @@ export default {
   },
   computed: {
     ...mapState({
-      categoryList: (state) => state.home.categoryList,
-    }),
-  },
+      categoryList: state => state.home.categoryList
+    })
+  }
 };
 </script>
 ```
-
