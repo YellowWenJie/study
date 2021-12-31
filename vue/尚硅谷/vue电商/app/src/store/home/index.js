@@ -16,14 +16,13 @@ const actions = {
 //mutations修改state的唯一手段
 const mutations = {
   CATEGORYLIST(state, categoryList) {
-    state.categoryList = categoryList;
-    console.log(categoryList);
+    state.categoryList = categoryList.slice(0, 16);
   }
 };
 //getters理解为计算属性
 const getters = {};
 export default {
-  namespaced: true,
+  // namespaced: true,
   state,
   actions,
   mutations,

@@ -9,6 +9,7 @@ const mutations = {};
 //getters理解为计算属性
 const getters = {};
 export default {
+  // namespaced: true,
   state,
   actions,
   mutations,

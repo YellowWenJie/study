@@ -1,22 +1,23 @@
 app
 
-## Project setup
-```
-npm install
-```
+![1640951912770](C:\Users\16063\AppData\Roaming\Typora\typora-user-images\1640951912770.png)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+<div align="center">  
+[![](https://img.shields.io/badge/Windows-11-2376bc?style=flat-square&logo=windows&logoColor=ffffff)](https://www.microsoft.com/windows/get-windows-10)
+[![](https://img.shields.io/badge/-JavaScript-f7e018?style=flat-square&logo=javascript&logoColor=white)](https://www.ecma-international.org/)
+[![](https://img.shields.io/badge/-HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](https://html.spec.whatwg.org/)
+[![](https://img.shields.io/badge/-CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](https://www.w3.org/Style/CSS/)
+[![](https://img.shields.io/badge/-Less-43853d?style=flat-square&logo=less&logoColor=white)](https://lesscss.org/)
+[![](https://img.shields.io/badge/-NPM-cb3837?style=flat-square&logo=npm&logoColor=white)](https://npmjs.com/)
+[![](https://img.shields.io/badge/-Git-f05032?style=flat-square&logo=git&logoColor=white)](https://git-scm.com/)
+[![](https://img.shields.io/badge/-Vue.js-4fc08d?style=flat-square&logo=vue.js&logoColor=ffffff)](https://vuejs.org/)
+[![](https://img.shields.io/badge/-Node.js-43853d?style=flat-square&logo=node.js&logoColor=ffffff)](https://nodejs.org/)
+[![](https://img.shields.io/badge/-Webpack-3776AB?style=flat-square&logo=webpack&logoColor=white)](https://webpack.js.org/)    
+</div>    
+
+
 
 权限管理: http://39.98.123.211:8170/swagger-ui.html
 商品管理：http://39.98.123.211:8216/swagger-ui.html
@@ -617,7 +618,7 @@ export default requests;
    });
    ```
 
-   * main.js中使用
+   * main.js中使用，**（挂载到vm的的时候名字要用store）**
 
    ```javascript
    import Vue from "vue";
@@ -728,7 +729,7 @@ export default requests;
 
    
 
-* home组件使用vuex获取数据
+* home组件使用vuex获取数据，**因为数据会多出一行，所以在mutations中加.slice(1, 17)**
 
 ```javascript
 //home
@@ -749,8 +750,7 @@ const actions = {
 //mutations修改state的唯一手段
 const mutations = {
   CATEGORYLIST(state, categoryList) {
-    state.categoryList = categoryList;
-    console.log(categoryList);
+    state.categoryList = categoryList.slice(1, 17);
   }
 };
 //getters理解为计算属性
@@ -802,3 +802,169 @@ export default {
 </script>
 ```
 
+#### 11、TypeNav遍历数据
+
+```vue
+<template>
+  <!-- 商品分类导航 -->
+  <div class="type-nav">
+    <div class="container">
+      <div class="sort">
+        <div class="all-sort-list2">
+          <div class="item" v-for="c1 in categoryList" :key="c1.categoryId">
+            <h3>
+              <a href>{{c1.categoryName}}</a>
+            </h3>
+            <div class="item-list clearfix">
+              <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
+                <dl class="fore">
+                  <dt>
+                    <a href>{{c2.categoryName}}</a>
+                  </dt>
+                  <dd>
+                    <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                      <a href>{{c3.categoryName}}</a>
+                    </em>
+                  </dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapState } from "vuex";
+export default {
+  name: "TypeNav",
+  //组件挂载完毕，向服务器发起请求
+  mounted() {
+    //通知Vuex发请求，获取数据，存储于仓库中
+    this.$store.dispatch("categoryList");
+  },
+  computed: {
+    ...mapState({
+      categoryList: (state) => state.home.categoryList,
+    }),
+  },
+};
+</script>
+```
+
+* 被v-for遍历的数据添加鼠标移动显示背景颜色
+
+```vue
+<template>
+  <!-- 商品分类导航 -->
+  <div class="type-nav">
+    <div class="container">
+      <div @mouseleave="leaveIndex">
+        <h2 class="all">全部商品分类</h2>
+        <div class="sort">
+          <div class="all-sort-list2">
+            <div
+              class="item"
+              v-for="(c1,index) in categoryList"
+              :key="c1.categoryId"
+              :class="{cur:currentIndex==index}"
+            >
+              <h3 @mouseenter="changeIndex(index)">
+                <a href>{{c1.categoryName}}</a>
+              </h3>
+              <div class="item-list clearfix">
+                <div class="subitem" v-for="(c2,index) in c1.categoryChild" :key="c2.categoryId">
+                  <dl class="fore">
+                    <dt>
+                      <a href>{{c2.categoryName}}</a>
+                    </dt>
+                    <dd>
+                      <em v-for="(c3,index) in c2.categoryChild" :key="c3.categoryId">
+                        <a href>{{c3.categoryName}}</a>
+                      </em>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="###">服装城</a>
+        <a href="###">美妆馆</a>
+        <a href="###">尚品汇超市</a>
+        <a href="###">全球购</a>
+        <a href="###">闪购</a>
+        <a href="###">团购</a>
+        <a href="###">有趣</a>
+        <a href="###">秒杀</a>
+      </nav>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapState } from "vuex";
+export default {
+  name: "TypeNav",
+  data() {
+    return {
+      currentIndex: -1,
+    };
+  },
+  methods: {
+    changeIndex(index) {
+      //鼠标进入修改响应式数据currentIndex属性
+      this.currentIndex = index;
+    },
+    // 鼠标移除
+    leaveIndex() {
+      this.currentIndex = -1;
+    },
+  },
+  //组件挂载完毕，向服务器发起请求
+  mounted() {
+    //通知Vuex发请求，获取数据，存储于仓库中
+    this.$store.dispatch("categoryList");
+  },
+  computed: {
+    ...mapState({
+      categoryList: (state) => state.home.categoryList,
+    }),
+  },
+};
+</script>
+```
+
+* 不使用css样式来显示二三级分类
+
+```
+:style="{display:currentIndex==index}"
+```
+
+#### 12、函数的防抖与节流（lodash插件）
+
+* 防抖：前面的所有触发都被取消，最后一次执行在规定的时间之内才会触发，也就是如果快速的触发，只会触发一次
+* 节流：在规定时间内不会重复触发回调，只有大于这个时间才会触发回调，把频繁的触发变为少量触发
+
+
+
+三级联动节流
+
+```JavaScript
+import throttle from "lodash/throttle";
+
+changeIndex: throttle(function (index) {
+      this.currentIndex = index;
+    }, 50),
+```
+
+#### 13、三级联动组件路由跳转与参数传递
+
+* 事件委派
+
+把方法写在三级联动的父盒子上
