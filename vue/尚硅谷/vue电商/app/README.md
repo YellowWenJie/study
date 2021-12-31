@@ -1,5 +1,6 @@
 app
 
+<img src='./src/assets/git/index.png'>
 <div align="center">
 
 [![](https://img.shields.io/badge/Windows-11-2376bc?style=flat-square&logo=windows&logoColor=ffffff)](https://www.microsoft.com/windows/get-windows-10)
@@ -241,7 +242,7 @@ target="\_blank" 跳转到新页面
 
        ````
 
-       ```javascript
+       ​```javascript
        传参方法
 
        1.字符串形式
@@ -921,4 +922,113 @@ changeIndex: throttle(function (index) {
 
 - 事件委派
 
-把方法写在三级联动的父盒子上
+**太容易写错了，一定要注意名字要对应**
+
+```vue
+<template>
+  <!-- 商品分类导航 -->
+  <div class="type-nav">
+    <div class="container">
+      <div @mouseleave="leaveIndex">
+        <h2 class="all">全部商品分类</h2>
+        <div class="sort">
+          <div class="all-sort-list2" @click="goSearch">
+            <div
+              class="item"
+              v-for="(c1,index) in categoryList"
+              :key="c1.categoryId"
+              :class="{cur:currentIndex==index}"
+            >
+              <h3 @mouseenter="changeIndex(index)">
+                <a
+                  :data-categoryName="c1.categoryName"
+                  :data-category1Id="c1.categoryId"
+                >{{c1.categoryName}}</a>
+              </h3>
+              <!-- 二三级分类 -->
+              <div class="item-list clearfix" :style="{display:currentIndex==index}">
+                <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
+                  <dl class="fore">
+                    <dt>
+                      <a
+                        :data-categoryName="c2.categoryName"
+                        :data-category2Id="c2.categoryId"
+                      >{{c2.categoryName}}</a>
+                    </dt>
+                    <dd>
+                      <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                        <a
+                          :data-categoryName="c3.categoryName"
+                          :data-category3Id="c3.categoryId"
+                        >{{c3.categoryName}}</a>
+                      </em>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+```
+
+```vue
+<script>
+import { mapState } from "vuex";
+import throttle from "lodash/throttle";
+
+export default {
+  name: "TypeNav",
+  data() {
+    return {
+      currentIndex: -1,
+    };
+  },
+  methods: {
+    changeIndex: throttle(function (index) {
+      this.currentIndex = index;
+    }, 50),
+    leaveIndex() {
+      this.currentIndex = -1;
+    },
+    goSearch(event) {
+      let element = event.target;
+      let { categoryname, category1id, category2id, category3id } =
+        element.dataset;
+      //如果标签身上拥有categoryame一定是a标签
+      if (categoryname) {
+        //整理路由跳转参数
+        let location = { name: "search" };
+        let query = { categoryName: categoryname };
+        if (category1id) {
+          query.category1Id = category1id;
+        } else if (category2id) {
+          query.category2Id = category2id;
+        } else {
+          query.category3Id = category3id;
+        }
+        //整理完参数
+        location.query = query;
+        console.log(query);
+        //路由跳转
+        this.$router.push(location);
+      }
+    },
+  },
+  //组件挂载完毕，向服务器发起请求
+  mounted() {
+    //通知Vuex发请求，获取数据，存储于仓库中
+    this.$store.dispatch("categoryList");
+  },
+  computed: {
+    ...mapState({
+      categoryList: (state) => state.home.categoryList,
+    }),
+  },
+};
+</script>
+```
+
