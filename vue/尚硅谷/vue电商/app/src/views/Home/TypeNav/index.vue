@@ -4,7 +4,7 @@
     <div class="container">
       <div @mouseleave="leaveIndex">
         <h2 class="all">全部商品分类</h2>
-        <div class="sort">
+        <div class="sort" v-show="show">
           <div class="all-sort-list2" @click="goSearch">
             <div
               class="item"
@@ -67,6 +67,7 @@ export default {
   data() {
     return {
       currentIndex: -1,
+      show: true,
     };
   },
   methods: {
@@ -94,7 +95,6 @@ export default {
         }
         //整理完参数
         location.query = query;
-        console.log(query);
         //路由跳转
         this.$router.push(location);
       }
