@@ -3,6 +3,7 @@ app
 ![img](https://img-blog.csdnimg.cn/e7fca57785ef4e5c87dddcf12c1c5f57.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBASFVBTkdXRU5KSUU2NjY=,size_20,color_FFFFFF,t_70,g_se,x_16)
 
 <div align="center">
+
 [![](https://img.shields.io/badge/Windows-11-2376bc?style=flat-square&logo=windows&logoColor=ffffff)](https://www.microsoft.com/windows/get-windows-10)
 [![](https://img.shields.io/badge/-JavaScript-f7e018?style=flat-square&logo=javascript&logoColor=white)](https://www.ecma-international.org/)
 [![](https://img.shields.io/badge/-HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](https://html.spec.whatwg.org/)
@@ -1044,7 +1045,7 @@ export default {
 
 - 性能优化
 
-home组件中加
+home 组件中加
 
 ```javascript
  mounted() {
@@ -1052,98 +1053,101 @@ home组件中加
   },
 ```
 
-
-
 #### 14、过度动画
 
-* 前提是组件|元素要有v-if或v-show指令才可以进行过度动画
+- 前提是组件|元素要有 v-if 或 v-show 指令才可以进行过度动画
 
 ```html
-<transition  name="sort"> 
-          <div class="sort" v-show="show">
-            <div class="all-sort-list2" @click="goSearch">
-              <div
-                class="item"
-                v-for="(c1,index) in categoryList"
-                :key="c1.categoryId"
-                :class="{cur:currentIndex==index}"
-              >
-                <h3 @mouseenter="changeIndex(index)">
+<transition name="sort">
+  <div class="sort" v-show="show">
+    <div class="all-sort-list2" @click="goSearch">
+      <div
+        class="item"
+        v-for="(c1,index) in categoryList"
+        :key="c1.categoryId"
+        :class="{cur:currentIndex==index}"
+      >
+        <h3 @mouseenter="changeIndex(index)">
+          <a
+            :data-categoryName="c1.categoryName"
+            :data-category1Id="c1.categoryId"
+            >{{c1.categoryName}}</a
+          >
+        </h3>
+        <!-- 二三级分类 -->
+        <div class="item-list clearfix" :style="{display:currentIndex==index}">
+          <div
+            class="subitem"
+            v-for="c2 in c1.categoryChild"
+            :key="c2.categoryId"
+          >
+            <dl class="fore">
+              <dt>
+                <a
+                  :data-categoryName="c2.categoryName"
+                  :data-category2Id="c2.categoryId"
+                  >{{c2.categoryName}}</a
+                >
+              </dt>
+              <dd>
+                <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
                   <a
-                    :data-categoryName="c1.categoryName"
-                    :data-category1Id="c1.categoryId"
-                  >{{c1.categoryName}}</a>
-                </h3>
-                <!-- 二三级分类 -->
-                <div class="item-list clearfix" :style="{display:currentIndex==index}">
-                  <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
-                    <dl class="fore">
-                      <dt>
-                        <a
-                          :data-categoryName="c2.categoryName"
-                          :data-category2Id="c2.categoryId"
-                        >{{c2.categoryName}}</a>
-                      </dt>
-                      <dd>
-                        <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                          <a
-                            :data-categoryName="c3.categoryName"
-                            :data-category3Id="c3.categoryId"
-                          >{{c3.categoryName}}</a>
-                        </em>
-                      </dd>
-                    </dl>
-                  </div>
-                </div>
-              </div>
-            </div>
+                    :data-categoryName="c3.categoryName"
+                    :data-category3Id="c3.categoryId"
+                    >{{c3.categoryName}}</a
+                  >
+                </em>
+              </dd>
+            </dl>
           </div>
-        </transition>
+        </div>
+      </div>
+    </div>
+  </div>
+</transition>
 ```
 
 ```css
- //过度动画的样式
-    //进入的动画
-    .sort-enter {
-      height: 0px;
-    }
-    .sort-enter-to {
-      height: 461px;
-    }
-    //定义动画时间,速率
-    .sort-enter-active {
-      transition: all 0.5s linear;
-    }
+//过度动画的样式
+//进入的动画
+.sort-enter {
+  height: 0px;
+}
+.sort-enter-to {
+  height: 461px;
+}
+//定义动画时间,速率
+.sort-enter-active {
+  transition: all 0.5s linear;
+}
 ```
 
 #### 15、路由跳转合并参数
 
 ```javascript
-
-      let element = event.target;
-      let { categoryname, category1id, category2id, category3id } =
-        element.dataset;
-      //如果标签身上拥有categoryame一定是a标签
-      if (categoryname) {
-        //整理路由跳转参数
-        let location = { name: "search" };
-        let query = { categoryName: categoryname };
-        if (category1id) {
-          query.category1Id = category1id;
-        } else if (category2id) {
-          query.category2Id = category2id;
-        } else {
-          query.category3Id = category3id;
-        }
-        //判断：如果路由跳转的时候带有params参数，带着一起传过去
-        if (this.$route.params) {
-          location.params = this.$route.params;
-          //整理完参数
-          location.query = query;
-          //路由跳转
-          this.$router.push(location);
-        }
-      }
+let element = event.target;
+let { categoryname, category1id, category2id, category3id } = element.dataset;
+//如果标签身上拥有categoryame一定是a标签
+if (categoryname) {
+  //整理路由跳转参数
+  let location = { name: "search" };
+  let query = { categoryName: categoryname };
+  if (category1id) {
+    query.category1Id = category1id;
+  } else if (category2id) {
+    query.category2Id = category2id;
+  } else {
+    query.category3Id = category3id;
+  }
+  //判断：如果路由跳转的时候带有params参数，带着一起传过去
+  if (this.$route.params) {
+    location.params = this.$route.params;
+    //整理完参数
+    location.query = query;
+    //路由跳转
+    this.$router.push(location);
+  }
+}
 ```
 
 参数传递
@@ -1162,39 +1166,39 @@ goSeach() {
     },
 ```
 
-#### 16、开发ListContainer组件与Floor
+#### 16、开发 ListContainer 组件与 Floor
 
-* mock.js(随机生成数据)（https://github.com/nuysoft/Mock/wiki/Getting-Started）
+- mock.js(随机生成数据)（https://github.com/nuysoft/Mock/wiki/Getting-Started）
 
-  * 安装
+  - 安装
 
     ```
     npm i --save mockjs
     ```
 
-  * 使用：
+  - 使用：
 
-    * src目录下创建mock文件夹
-    * 在mock目录下创建json数组
-    * 把需要的图片放入public文件夹的images中
-    * 创建mockServe.js通过mockjs插件实现模拟数据
+    - src 目录下创建 mock 文件夹
+    - 在 mock 目录下创建 json 数组
+    - 把需要的图片放入 public 文件夹的 images 中
+    - 创建 mockServe.js 通过 mockjs 插件实现模拟数据
 
     ```javascript
     import Mock from "mockjs";
     import banner from "./banner.json";
     import floor from "./floor.json";
-    
+
     Mock.mock("/mock/banner", { code: 200, data: banner });
     Mock.mock("/mock/floor", { code: 200, data: floor });
     ```
 
-    * main.js引入
+    - main.js 引入
 
     ```
     import "@/mock/mockServe";
     ```
 
-    * api新建mockAjax.js
+    - api 新建 mockAjax.js
 
     ```
     //axios进行二次封装
@@ -1203,7 +1207,7 @@ goSeach() {
     //nprogress的start()进度条开始，done()进度条结束
     // 引入nprogress进度条样式
     import "nprogress/nprogress.css";
-    
+
     //1.利用axios对象的方法create，去创建一个axios实例
     //2.request就是axios，只不过稍微配置一下
     const requests = axios.create({
@@ -1213,7 +1217,7 @@ goSeach() {
       //代表请求超时的时间
       timeout: 5000
     });
-    
+
     //请求拦截器：在发请求之前，请求拦截器可以检测到，可以在请求发出去之后做一些事情
     requests.interceptors.request.use(config => {
       //config:配置对象，对象里面有一个属性很重要，headers请求头
@@ -1221,7 +1225,7 @@ goSeach() {
       nprogress.start();
       return config;
     });
-    
+
     //响应拦截器
     requests.interceptors.response.use(
       res => {
@@ -1235,25 +1239,17 @@ goSeach() {
         return Promise.reject(new Error("faile"));
       }
     );
-    
+
     export default requests;
     ```
 
-  * api的index.js写入
+  - api 的 index.js 写入
 
     ```vue
-    import mockAjax from "./mockAjax";
-    
-    //获取首页轮播图banner
-    export const reqBannerList = () => {
-      //发请求:axios 发请求返回的都是Promise对象
-      return mockAjax({ url: "/banner", method: "get" });
-    };
-    
-    
-    
-    
-    
+    import mockAjax from "./mockAjax"; //获取首页轮播图banner export const
+    reqBannerList = () => { //发请求:axios 发请求返回的都是Promise对象 return
+    mockAjax({ url: "/banner", method: "get" }); };
+
     <script>
     import { mapState } from "vuex";
     export default {
@@ -1262,24 +1258,22 @@ goSeach() {
       },
       computed: {
         ...mapState({
-          bannerList: (state) => state.home.bannerList,
-        }),
-      },
+          bannerList: state => state.home.bannerList
+        })
+      }
     };
     </script>
     ```
 
-    
-
 #### 17、swiper
 
-* 安装
+- 安装
 
   ```
   npm install --save swiper@5
   ```
 
-* 使用
+- 使用
 
 ```
 //全局引入swiper样式
@@ -1291,23 +1285,14 @@ import Swiper from "swiper";
 ```
 
 ```vue
- updated() {
-    new Swiper(document.querySelector(".swiper-container"), {
-      loop: true,
-      pagination: {
-        el: "swiper-pagination",
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-    });
-  },
+updated() { new Swiper(document.querySelector(".swiper-container"), { loop:
+true, pagination: { el: "swiper-pagination", }, navigation: { nextEl:
+".swiper-button-next", prevEl: ".swiper-button-prev", }, }); },
 ```
 
-#### 18、$nextTick（在下次DOM更新之前）
+#### 18、$nextTick（在下次 DOM 更新之前）
 
-* 在下次DOM更新结束之后  执行延迟问题。在  修改数据之后  立即使用这个方法，获取更新后的DOM。
+- 在下次 DOM 更新结束之后 执行延迟问题。在 修改数据之后 立即使用这个方法，获取更新后的 DOM。
 
 ```javascript
  watch: {
@@ -1332,11 +1317,11 @@ import Swiper from "swiper";
   },
 ```
 
-#### 19、v-for在自定义组件中使用
+#### 19、v-for 在自定义组件中使用
 
-floor vuex获取数据
+floor vuex 获取数据
 
-* 在home中写：
+- 在 home 中写：
 
 ```
 this.$store.dispatch("getFloorList");
@@ -1346,13 +1331,13 @@ this.$store.dispatch("getFloorList");
 <Floor v-for="(floor,index) in floorList" :key="floor.id" />
 ```
 
-* 使用自定义事件父给子传值
+- 使用自定义事件父给子传值
 
 ```
 <Floor v-for="(floor,index) in floorList" :key="floor.id" :list="floor" />
 ```
 
-* 子组件使用
+- 子组件使用
 
 ```
  props: ["list"],
@@ -1361,13 +1346,11 @@ this.$store.dispatch("getFloorList");
   },
 ```
 
-
-
 #### 20、组件通信有哪些？
 
-* props：用于父子组件通信
-* 自定义事件：@on @emit 可以实现子给父传值
-* 全局事件总线：$bus 全能
-* pubsub-js：vue当中几乎不用 全能
-* 插槽
-* vuex
+- props：用于父子组件通信
+- 自定义事件：@on @emit 可以实现子给父传值
+- 全局事件总线：$bus 全能
+- pubsub-js：vue 当中几乎不用 全能
+- 插槽
+- vuex

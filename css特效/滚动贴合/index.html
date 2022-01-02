@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    main{
+      scroll-snap-type: y mandatory;
+      overflow: scroll;
+      height: 100vh;
+    }
+    section{
+      width: 100vw;
+      height: 100vh;
+      scroll-snap-align: start;
+    }
+    section:nth-child(1){background-color: rgb(219, 206, 16);}
+    section:nth-child(2){background-color: rgb(199, 23, 23);}
+    section:nth-child(3){background-color: rgb(38, 218, 38);}
+    section:nth-child(4){background-color: rgb(39, 225, 250);}
+  </style>
+</head>
+<body>
+  <main>
+    <section>1</section>
+    <section>2</section>
+    <section>3</section>
+    <section>4</section>
+  </main>
+  
+</body>
+</html>
