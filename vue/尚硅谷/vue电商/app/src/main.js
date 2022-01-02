@@ -4,7 +4,9 @@ import router from "@/router";
 import store from "@/store";
 
 import TypeNav from "@/views/Home/TypeNav";
+import Carsousel from "@/components/Carsousel";
 Vue.component(TypeNav.name, TypeNav);
+Vue.component(Carsousel.name, Carsousel);
 
 import "@/mock/mockServe";
 

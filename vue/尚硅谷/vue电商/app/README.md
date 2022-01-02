@@ -22,6 +22,12 @@ app
 
 target="\_blank" 跳转到新页面
 
+
+
+//watch立即监听,不管数据有没有更新，我上来立即监听一次
+
+​    immediate: true,
+
 # 笔记
 
 #### 1、项目的其他配置
@@ -1354,3 +1360,49 @@ this.$store.dispatch("getFloorList");
 - pubsub-js：vue 当中几乎不用 全能
 - 插槽
 - vuex
+
+#### 21、swiper轮播图注意点
+
+* 第一次书写swiper的时候，在mounted当中是不可以的，因为第一次书写轮播图的时候，是在当前组件内部发请求，动态渲染解构【前台至少服务器数据需要回来】
+
+* 所有要这么写：
+
+  ```JavaScript
+  <script>
+  import { mapState } from "vuex";
+  //引包
+  import Swiper from "swiper";
+  export default {
+    mounted() {
+      this.$store.dispatch("getBannerList");
+    },
+    computed: {
+      ...mapState({
+        bannerList: (state) => state.home.bannerList,
+      }),
+    },
+    watch: {
+      //监听bannerList数据的变化，因为这条数据发生过变化--由空数组变为数组里面有四个元素
+      bannerList: {
+        handler(newValue, oldValue) {
+          this.$nextTick(() => {
+            new Swiper(this.$refs.cur, {
+              loop: true,
+              pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+              },
+              navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+              },
+            });
+          });
+        },
+      },
+    },
+  };
+  </script>
+  ```
+
+  
