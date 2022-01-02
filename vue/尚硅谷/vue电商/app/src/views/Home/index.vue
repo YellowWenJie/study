@@ -5,7 +5,7 @@
     <Recommend />
     <Rank />
     <Like />
-    <Floor />
+    <Floor v-for="(floor,index) in floorList" :key="floor.id" :list="floor" />
     <Brand />
   </div>
 </template>
@@ -28,6 +28,17 @@ export default {
     Brand,
   },
   computed: {},
+  mounted() {
+    this.$store.dispatch("categoryList");
+
+    //floor派发vuex
+    this.$store.dispatch("getFloorList");
+  },
+  computed: {
+    ...mapState({
+      floorList: (state) => state.home.floorList,
+    }),
+  },
 };
 </script>
 

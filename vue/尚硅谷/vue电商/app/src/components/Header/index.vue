@@ -51,7 +51,14 @@ export default {
   methods: {
     goSeach() {
       //toUpperCase把字符串转换为大写
-      this.$router.push("/home");
+      if (this.$route.query) {
+        let location = {
+          name: "search",
+          params: { keyword: this.keyword || undefined },
+        };
+        location.query = this.$route.query;
+        this.$router.push(location);
+      }
     },
   },
 };

@@ -94,7 +94,12 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["list"],
+  mounted() {
+    console.log(this.list);
+  },
+};
 </script>
 
 <style lang="less" scoped>
