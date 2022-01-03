@@ -22,7 +22,6 @@
               <img src="../img/floor-1-1.png" />
             </div>
             <div class="floorBanner">
-              <!-- 轮播图 -->
               <Carsousel :list="list.carouselList" />
             </div>
             <div class="split">

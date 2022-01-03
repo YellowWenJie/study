@@ -1405,4 +1405,29 @@ this.$store.dispatch("getFloorList");
   </script>
   ```
 
-  
+* 在Carsousel封装组件的时候一定记得加 immediate: true 不然Floor组件的轮播图加载不出来，因为watch是数据发生变化时监听
+
+```javascript
+watch: {
+    immediate: true,
+    list: {
+      immediate: true,
+      handler(newValue, oldValue) {
+        this.$nextTick(() => {
+          new Swiper(this.$refs.cur, {
+            loop: true,
+            pagination: {
+              el: ".swiper-pagination",
+              clickable: true,
+            },
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+          });
+        });
+      },
+    },
+  },
+```
+
