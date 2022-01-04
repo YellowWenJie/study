@@ -48,6 +48,11 @@ export default {
       keyword: "",
     };
   },
+  mounted() {
+    this.$bus.$on("clear", () => {
+      this.keyword = "";
+    });
+  },
   methods: {
     goSeach() {
       //toUpperCase把字符串转换为大写

@@ -1431,3 +1431,112 @@ watch: {
   },
 ```
 
+#### 22、vuex的getters属性注意点
+
+```javascript
+const getters = {
+  goodsList(state) {
+    //state.searchList.goodsList如果服务器数据回来了，没问题是一个数组
+    //假如网络不给力|没有网state.searchList.goodsList应该返回的是undefined
+    //计算新的属性的属性值至少给人家来一个数组
+    return state.searchList.goodsList || [];
+  },
+ }
+```
+
+#### 23、Object.saaign  es6新增
+
+```javascript
+  beforeMount() {
+    // Object.saaign;
+    // this.searcgParams.category1Id = this.$route.query.category1Id;
+    // this.searcgParams.category2Id = this.$route.query.category2Id;
+    // this.searcgParams.category3Id = this.$route.query.category3Id;
+    // this.searcgParams.categoryName = this.$route.query.categoryName;
+    // this.searcgParams.keyword = this.$route.params.keyword;
+    Object.assign(this.searcgParams, this.$route.query, this.$route.params);
+  },
+```
+
+#### 24、路由跳转注意点
+
+*  this.**$router**.push({ name: "search", params: this.$route.params });
+
+#### 25、全局事件总线，兄弟组件通信$bus
+
+* 先在main.js中使用
+
+  ```javascript
+  new Vue({
+    render: h => h(App),
+    // 全局事件总线$bus
+    beforeCreate() {
+      Vue.prototype.$bus = this;
+    },
+  
+    router,
+    store
+  }).$mount("#app");
+  
+  ```
+
+* 然后兄弟组件传递信息
+
+  ```javascript
+  this.$bus.$emit("clear");
+  ```
+
+* 然后另一个兄弟组件监听：
+
+  ```javascript
+  this.$bus.$on("clear", () => {
+    this.keyword = "";
+  });
+  ```
+
+#### 26、子传父（自定义事件）
+
+* 父组件在子组件上绑定自定义事件
+
+  ```javascript
+  <SearchSelector @trademarkInfo="trademarkInfo" />
+  ```
+
+* 子组件通过$emit传数据
+
+  ```javascript
+  tradeMatkHandler(trademark) {
+        this.$emit("trademarkInfo", trademark);
+      },
+  ```
+
+* 父组件再接收
+
+  ```javascript
+  trademarkInfo(trademark) {
+        // console.log(trademark);
+      },
+  ```
+
+#### 27、.split(":")[1]切割数组
+
+![1641277689518](C:\Users\16063\AppData\Roaming\Typora\typora-user-images\1641277689518.png)
+
+#### 28、数组去重
+
+```javascript
+ let props = `${attr.arrrId}:${attrValue}:${attr.attrName}`;
+      if (this.searcgParams.props.indexOf(props) == -1) {
+        this.searcgParams.props.push(props);
+      }
+```
+
+#### 29、.splice(index,1) 操作数组
+
+#### 30、排序
+
+
+
+#### 31、分页
+
+* 

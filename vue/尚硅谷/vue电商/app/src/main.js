@@ -5,8 +5,10 @@ import store from "@/store";
 
 import TypeNav from "@/views/Home/TypeNav";
 import Carsousel from "@/components/Carsousel";
+import Pagination from "@/components/Pagination";
 Vue.component(TypeNav.name, TypeNav);
 Vue.component(Carsousel.name, Carsousel);
+Vue.component(Pagination.name, Pagination);
 
 import "@/mock/mockServe";
 
@@ -17,6 +19,11 @@ Vue.config.productionTip = false;
 
 new Vue({
   render: h => h(App),
+  // 全局事件总线$bus
+  beforeCreate() {
+    Vue.prototype.$bus = this;
+  },
+
   router,
   store
 }).$mount("#app");

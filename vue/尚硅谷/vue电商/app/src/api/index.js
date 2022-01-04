@@ -20,3 +20,7 @@ export const reqFloorList = () => {
   //发请求:axios 发请求返回的都是Promise对象
   return mockRequests({ url: "/floor", method: "get" });
 };
+
+//获取搜索模块数据  地址：/api/list  请求方式：post
+export const reqGetSearchInfo = params =>
+  requests({ url: "/list", method: "post", data: params });
