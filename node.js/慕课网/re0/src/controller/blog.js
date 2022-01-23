@@ -33,7 +33,26 @@ const getDetail = id => {
     author: "黄文杰"
   };
 };
+const newBlog = (blogData = {}) => {
+  console.log(blogData);
+  // blogData是一个博客对象，包含title content属性
+  return {
+    id: 3 // 表示新建博客，插入到数据表里面的id
+  };
+};
+const updataBlog = (id, blogData = {}) => {
+  // id 就是要更新博客的 id
+  // blogData是一个博客对象，包含title content属性
+  console.log(id, blogData);
+  return true;
+};
+const delBlog = id => {
+  return true;
+};
 module.exports = {
   getList,
-  getDetail
+  getDetail,
+  newBlog,
+  updataBlog,
+  delBlog
 };

@@ -3,7 +3,7 @@ class BaseModel {
     if (typeof data === "string") {
       this.message = data;
       data = null;
-      massage = null;
+      // massage = null;
     }
     if (data) {
       this.data = data;
