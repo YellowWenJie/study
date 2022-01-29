@@ -314,7 +314,7 @@ const env = process.env.NODE_ENV //环境参数
 
 
 
-# redis
+# redis  版本问题！！！
 
 安装：https://www.runoob.com/redis/redis-install.html
 
@@ -501,4 +501,137 @@ const env = process.env.NODE_ENV //环境参数
 
 
 
-使用 express
+# 使用 express
+
+* express 是 node.js 最常用的 web server 框架
+* 什么是框架？
+* 不要以为 express 过时了！
+
+
+
+目录
+
+* express 下载，安装和使用，express 中间件机制
+  * 安装（使用脚手架 express-generator）
+    * npm install express-generator -g
+    * express express-test
+    * npm install & npm start
+  * 初始化代码介绍，处理路由
+  * 使用中间件
+* 开发接口，连接数据库，实现登录，日志记录
+* 分析 express 中间件原理
+
+# 登录
+
+* 使用 express-session 和 connect-redis ，简单方便
+
+* req.session 保存登录信息，登录校验做成 express 中间件
+
+* 设置 session
+
+  ```javascript
+  // 设置session
+  app.use(
+    session({
+      resave: false, //添加 resave 选项
+      saveUninitialized: true, //添加 saveUninitialized 选项
+      secret: "黄文杰的cookie", // 相当于密匙
+      cookie: {
+        // path: "/", // 默认配置
+        // httpOnly: true, // 默认配置
+        maxAge: 24 * 60 * 60 * 1000
+      },
+      store: sessionStore
+    })
+  );
+  ```
+
+  
+
+# 日志
+
+* access log 记录，直接使用脚手架推荐的 morgan
+* 自定义日志使用 console.log 和 console.error 即可
+* 日志拆分、日志内容分析。
+
+
+
+```javascript
+// 日志记录
+const logger = require("morgan");
+app.use(logger("dev", { stream: process.stdout }));
+```
+
+* 如何将日志保存到自定义文件中
+
+  ```javascript
+  // 日志记录
+  const logger = require("morgan");
+  // 打印日志记录，开发环境 dev
+  const ENV = process.env.NODE_ENV;
+  if (ENV !== "production") {
+    // 开发环境 | 测试环境
+    app.use(logger("dev"));
+  } else {
+    // 线上环境
+    const logFileName = path.join(__dirname, "logs", "access.log");
+    const writeStream = fs.createWriteStream(logFileName, { flags: "a" });
+    app.use(logger("combined", { stream: writeStream }));
+  }
+  ```
+
+  
+
+# koa2
+
+* express 中间件是异步回调， koa2 原生支持 async/await
+* 新开发框架和系统，都开始基于koa2，例如 egg.js
+* express 虽然未过时，但 koa2 肯定是未来趋势
+
+* # 目录
+
+* async/await 语法介绍，安装和使用 koa2
+
+  * 安装 npm instal koa-generator -g
+
+  * Koa2 koa2-test
+
+    
+
+* 开发接口，连接数据库，实现登录，日志记录
+
+* 分析 koa2 中间件原理
+
+
+
+# 线上环境
+
+* 服务稳问到性
+* 充分利用服务器硬件资源，以便提高性能
+* 线上日志记录
+
+PM2
+
+* 进程守护，系统崩溃自动重启
+* 启动多进程，充分利用 CPU 和内存
+* 自带日志记录功能
+
+目录
+
+* PM2 介绍
+  * 下载安装
+    * npm install pm2 -g
+    * pm2 -version
+  * 基本使用
+    * pm2 start ... （启动）， pm2 list（查看）
+    * pm2 restart <AppName>/<id> // 重启
+    * pm2 stop <AppName>/<id>(停止) , pm2 delete <AppName>/<id>(删除)
+    * pm2 info <AppName>/<id>(基本信息)
+    * pm2 log <AppName>/<id>（查看进程日志打印）
+    * pm2 monit <AppName>/<id>（监控 cpu 进程信息）
+  * 常用命令
+* PM2 进程守护
+* PM2 配置和日志记录
+* PM2 多进程
+* 关于服务器运维
+
