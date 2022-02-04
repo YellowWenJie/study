@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text" id="name">
+  <button id="setname">设置</button>
+  <input type="text" id="text">
+  <button id="btn" type="button">发送</button>
+  <div id="container"></div>
+
+  <script type="text/javascript">
+    // ws.onopen = function (e) {
+    //   ws.send('来自客户端的信息')
+    // }
+    // ws.onmessage = function (e) {
+    //   console.log(e.data);
+    // }
+    let ws = null
+    document.getElementById('setname').onclick = function () {
+      let name = document.getElementById('name').value
+      if (!name) {
+        return alert('名字为空')
+      } else {
+        ws = new WebSocket('ws://localhost:2333')
+        ws.onopen = function () {
+          ws.send(JSON.stringify({ name: name, type: 'setname' }))
+        }
+        document.getElementById('btn').onclick = send
+        document.getElementById('text').onkeydown = function (e) {
+          if (e.keyCode !== 13) {
+            return
+          }
+          send()
+        }
+        ws.onmessage = function (e) {
+          let con = document.getElementById('container')
+          // con.inserteBefore(createChatPanel(JSON.parse(e.data), con.children[0])
+          // appendChild() 方法可向节点的子节点列表的末尾添加新的子节点
+          document.getElementById('container').appendChild(createChatPanel(JSON.parse(e.data))
+          );
+        }
+        document.getElementById('setname').setAttribute('disabled', true);
+      }
+      function createChatPanel(data) {
+        let name = data.name
+        let text = data.text
+        let div = document.createElement('div')
+        let span1 = document.createElement('span1')
+        let span2 = document.createElement('span2')
+        span1.innerHTML = name + ':' + (new Date().toString())
+        span2.innerHTML = text
+        span1.style.color = 'blue'
+        div.appendChild(span1)
+        div.appendChild(document.createElement('br'))
+        div.appendChild(span2)
+        return div
+      }
+      function send() {
+        let text = document.getElementById('text').value
+        if (!text) {
+          return
+        }
+        ws.send(JSON.stringify({ text: text, type: 'chat' }));
+        text.value = ''
+      }
+
+
+    }
+    // ws.onopen = function () {
+    //   document.getElementById('btn').onclick = function () {
+    //     ws.send(document.getElementById('text').value);
+    //   }
+    // }
+    // ws.onmessage = function (e) {
+    //   // document.body.innerHTML += `<p>${e.data}</p>`
+    //   let p = document.createElement('p')
+    //   p.innerHTML = e.data;
+    //   // appendChild() 方法可向节点的子节点列表的末尾添加新的子节点
+    //   document.body.appendChild(p);
+    // }
+  </script>
+</body>
+
+</html>
