@@ -42,7 +42,7 @@ app.use("/my", userinforRouter);
 // 导入并使用文章分类路由模块
 const artCateRouter = require("./router/artcate");
 app.use("/my/article", artCateRouter);
-// 导入并使用文章路由模块
+// 添加文章
 const articleRouter = require("./router/article");
 app.use("/my/article", articleRouter);
 // 托管静态资源文件
