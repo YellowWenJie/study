@@ -1,0 +1,14 @@
+.details-container {
+  display: flex;
+  justify-content: space-between;
+}
+.related-cases {
+  .related-cases-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .related-cases-body {
+    overflow-x: auto;
+  }
+}
