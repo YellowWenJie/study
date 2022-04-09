@@ -1,0 +1,46 @@
+<template>
+  <div class="home">
+    <TypeNav />
+    <ListContainer />
+    <Recommend />
+    <Rank />
+    <Like />
+    <Floor v-for="(floor,index) in floorList" :key="floor.id" :list="floor" />
+    <Brand />
+  </div>
+</template>
+
+<script>
+import ListContainer from "@/views/Home/ListContainer";
+import Recommend from "@/views/Home/Recommend";
+import Rank from "@/views/Home/Rank";
+import Like from "@/views/Home/Like";
+import Floor from "@/views/Home/Floor";
+import Brand from "@/views/Home/Brand";
+import { mapState } from "vuex";
+export default {
+  components: {
+    ListContainer,
+    Recommend,
+    Rank,
+    Like,
+    Floor,
+    Brand,
+  },
+  computed: {},
+  mounted() {
+    this.$store.dispatch("categoryList");
+
+    //floor派发vuex
+    this.$store.dispatch("getFloorList");
+  },
+  computed: {
+    ...mapState({
+      floorList: (state) => state.home.floorList,
+    }),
+  },
+};
+</script>
+
+<style lang="less" scoped>
+</style>
