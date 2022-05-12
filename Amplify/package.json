@@ -1,0 +1,36 @@
+{
+  "name": "amplify",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@aws-amplify/ui-react": "^2.15.8",
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.5.1",
+    "@mui/material": "^5.5.3",
+    "animate.css": "^4.1.1",
+    "aws-amplify": "^4.3.20",
+    "axios": "^0.26.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.2.2",
+    "redux": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.33",
+    "@types/react-dom": "^17.0.10",
+    "@types/react-redux": "^7.1.23",
+    "@vitejs/plugin-react": "^1.0.7",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "redux-devtools-extension": "^2.13.9",
+    "sass": "^1.49.9",
+    "typescript": "^4.5.4",
+    "vite": "^2.8.0"
+  }
+}
