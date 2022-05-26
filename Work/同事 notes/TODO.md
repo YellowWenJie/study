@@ -2,54 +2,6 @@
 
 ## Github & Gmail
 
-chengchina2021@gmail.com
-
-CeLx9ha2
-
-1. 李
-
-   - [chengcui2022@gmail.com](mailto:chengcui2022@gmail.com)
-
-   - Ruiku12345
-
-   - GitHub
-
-     - ```
-       chengcui2022 Ruiku12345 Github. Monday Guy
-       ```
-
-2. 廖
-
-   - [cuicheng2022@gmail.com](mailto:cuicheng2022@gmail.com)
-
-   - Ruiku12345
-
-   - GitHub
-
-     - ```
-       cuicheng2022 Ruiku12345 Github  Tuesday Guy
-       ```
-   
-3. yang
-
-   1. [cuicheng2021](https://github.com/cuicheng2021)
-
-4. luo
-
-   1. chengcuichina2021
-      1. Ruiku123456
-
-5. liang
-
-6. pan
-
-   1. chengcui2022
-
-7. he
-
-   1. cuicheng2022
-
-CeLx9ha2
 
 ```
 chengcui2025@gmail.com
