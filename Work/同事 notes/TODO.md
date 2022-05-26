@@ -1,14 +1,3 @@
-# 设置项目git本地用户
-
-## Github & Gmail
-
-
-```
-chengcui2025@gmail.com
-Ruiku12345
-```
-
-
 
 nvm use 后 node_modules 才生效
 
