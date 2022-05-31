@@ -43,27 +43,11 @@ const userData = trimStringFields({
       })
 ```
 
-* 如果有一万个 li 怎么
+* 名字排序
 
+```javascript
+const data = [{name:'h'},{name:'a'},{name:'C'},]
+const result =  data.sort(function(a,b){return a.name.localeCompare(b.name)})
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1. 
-
-cheng.cui+user040
-
-@better-boards.com
 
