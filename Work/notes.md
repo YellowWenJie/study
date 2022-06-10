@@ -1,4 +1,4 @@
-<h1 align='center'>Work Notes</h1>
+<h1 align='center'>Notes</h1>
 
 * 过滤
 
@@ -50,4 +50,9 @@ const data = [{name:'h'},{name:'a'},{name:'C'},]
 const result =  data.sort(function(a,b){return a.name.localeCompare(b.name)})
 ```
 
+* 电脑配置代码规范
+
+  * 全局和编译器安装 ESlint
+
+    
 
