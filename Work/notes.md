@@ -54,5 +54,89 @@ const result =  data.sort(function(a,b){return a.name.localeCompare(b.name)})
 
   * 全局和编译器安装 ESlint
 
-    
+    ``` json
+    {
+      "tabnine.experimentalAutoImports": true,
+      "workbench.iconTheme": "vscode-icons",
+      "workbench.colorTheme": "One Dark Pro Darker",
+      "editor.formatOnPaste": true, // 粘贴格式化
+      "editor.formatOnSave": true, // 保存格式化
+      "editor.tabSize": 2, // 缩进
+      "editor.detectIndentation": false,
+      // eslint 检查
+      "editor.wordWrap": "on",
+      "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+      "eslint.validate": ["javascript", "html", "vue"],
+      "eslint.format.enable": true,
+      "eslint.options": {
+        "overrideConfig": {
+          "env": {
+            "browser": true,
+            "node": true,
+            "es2021": true
+          },
+          "parserOptions": {
+            "ecmaFeatures": {
+              "jsx": true
+            },
+            "ecmaVersion": "latest",
+            "sourceType": "module"
+          },
+          "rules": {
+            "no-debugger": "off"
+          }
+        }
+      },
+      "html.format.indentHandlebars": true,
+      "html.format.preserveNewLines": true,
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": true,
+        "source.fixAll": true,
+        "source.fixAll.eslint": false
+      },
+      "emmet.includeLanguages": {
+        "vue": "html",
+        "javascript": "html"
+      },
+      "[vue]": {
+        "editor.defaultFormatter": "octref.vetur"
+      },
+      "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      },
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      },
+      "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      },
+      "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      },
+      "[typescript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+      },
+      "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      }
+      // // // // //
+    }
+    ```
+
+* 数组会以 empt 填充
+
+```javascript
+const arr = [1, 'arr', true, [0, 1, -1]]
+arr[5] = Symbol()
+console.log(arr.length) // 6
+
+// (6) [1, 'arr', true, Array(3), empty, Symbol()] 因为js 会以 empty 填充
+```
+
+
+
+
+
+
 
