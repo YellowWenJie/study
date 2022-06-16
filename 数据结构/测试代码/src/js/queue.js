@@ -162,5 +162,30 @@ function hotPotato (elementsList, num) {
     winner: queue.dequeue() // {5}
   }
 }
-// const list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
-// console.log(hotPotato(list, 2))
+
+// 回文
+// eslint-disable-next-line no-unused-vars
+function palindromeChecker (aString) {
+  if (aString === undefined || aString === null ||
+    (aString !== null && aString.length === 0)) { // {1}
+    return false
+  }
+  const dequeue = new Dequeue() // {2}
+  const lowerString = aString.toLocaleLowerCase().split(' ').join('') // {3}
+  let isEqual = true
+  let firstChar, lastChar
+
+  for (let i = 0; i < lowerString.length; i++) { // {4}
+    dequeue.addBack(lowerString.charAt(i))
+  }
+
+  while (dequeue.size() > 1 && isEqual) { // {5}
+    firstChar = dequeue.removeFront() // {6}
+    lastChar = dequeue.removeBack() // {7}
+    if (firstChar !== lastChar) {
+      isEqual = false // {8}
+    }
+  }
+
+  return isEqual
+}

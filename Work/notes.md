@@ -136,7 +136,63 @@ console.log(arr.length) // 6
 
 
 
+* CentOS 使用 docker 搭建 mysql 服务
+  * https://www.jianshu.com/p/17de4ee23f6a
 
+* node查看全局安装的依赖：`npm list -g --depth 0`
 
+* 如何在 node 环境中使用 import 
 
+  1. npm init -y  添加 package.js 文件，并添加 `"type": "module"`，如下
 
+  ```json
+  {
+    "name": "js",
+    "type": "module",
+    "version": "1.0.0",
+    "description": "",
+    "main": "babel.config.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+  }
+  
+  ```
+
+  2. 使用以下命令运行文件：
+
+     `nodemon --experimental-modules --es-module-specifier-resolution=node linkedList.mjs`
+
+  3. 修改一下
+
+     ```json
+     {
+       "name": "js",
+       "type": "module",
+       "version": "1.0.0",
+       "description": "",
+       "main": "babel.config.js",
+       "scripts": {
+         "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node"
+       },
+       "keywords": [],
+       "author": "",
+       "license": "ISC"
+     }
+     
+     ```
+
+     只需要运行 npm run dev 要运行的文件夹
+
+* docker-compose 命令：https://www.cnblogs.com/moxiaoan/p/9299404.html
+* docker 创建的 mysql8 怎么改密码
+  1. `docker-compose ps` 查看容器
+  2. `docker exec -it mysql bash` 进入容器
+  3. ` mysql -uroot -p` 登录mysql
+  4. `ALTER USER 'root'@'%' IDENTIFIED BY 'huangwenjie' PASSWORD EXPIRE NEVER;` 修改密码
+  5. `ALTER USER 'root'@'localhost' IDENTIFIED BY 'huangwenjie';` 修改本地密码
+  6. `quit` 退出 mysql
+  7. `exit` 退出 docker
