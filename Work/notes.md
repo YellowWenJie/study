@@ -221,4 +221,24 @@ console.log(arr.length) // 6
   console.log(getName.call(person, '彭于晏'),getName.apply(person, ['吴彦祖']), getAge()) // 20
   ```
 
+* 关于连等优先级( . 优先于 = )（因为一般连等赋值为右向左）
+
+  ```js
+  let a = { num: 1 }
+  let b = a
+  a.x = a = { num: 2 }
   
+  console.log(a.x, b.x) // undefined, { num: 1, x: { num: 2} }
+  ```
+
+  ```js
+  let a = { num: 1 }
+  let b = a
+  a.x = (function () {
+      return a = { num: 2 }
+  })()
+  
+  console.log(a.x, b.x) // undefined, { num: 1, x: { num: 2} }
+  ```
+
+先运行 a.x = a ,此时 a.x = undefined，a.num = 1，然后再运行 a = { num: 2}，a.x = { num: 2 }，所以 b 就会等于 { num: 1, x: { num: 2} }
