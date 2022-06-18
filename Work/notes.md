@@ -196,3 +196,29 @@ console.log(arr.length) // 6
   5. `ALTER USER 'root'@'localhost' IDENTIFIED BY 'huangwenjie';` 修改本地密码
   6. `quit` 退出 mysql
   7. `exit` 退出 docker
+
+* 使用 const 结构方法
+
+  ```js
+  class Person {
+    constructor () {
+      this._name = '黄文杰'
+      this._age = '20'
+    }
+  
+    getName (name) {
+      return name ? name : this._name
+    }
+  
+    getAge = (age) => {
+      return age ? age : this._age
+    }
+  }
+  
+  const person = new Person()
+  console.log(person.getName()) // 黄文杰
+  const { getName, getAge } = person
+  console.log(getName.call(person, '彭于晏'),getName.apply(person, ['吴彦祖']), getAge()) // 20
+  ```
+
+  

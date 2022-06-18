@@ -15,6 +15,7 @@ export default class LinkedList {
       this.head = node
     } else {
       current = this.head
+      // 拿到尾部
       while (current.next != null) {
         current = current.next
       }
@@ -22,4 +23,35 @@ export default class LinkedList {
     }
     this.count++
   }
+
+  removeAt (index) {
+    if (index >= 0 && index < this.count) {
+      let current = this.head
+      if (index === 0) {
+        this.head = current.next
+      } else {
+        let previous
+        for(let i = 0; i < index; i++) {
+          previous = current
+          current  = current.next
+        }
+        previous.next = previous.next
+      }
+      this.count--
+      return current.element
+    }
+    return undefined
+  }
+
+  getEkementAt (index) {
+    if (index >= 0 && index < this.count) {
+      let node = this.head
+      for (let i = 0; i < index && node != null; i++) {
+        node = node.next
+      }
+      return node
+    }
+    return undefined
+  }
 }
+const linkedList = new LinkedList()
