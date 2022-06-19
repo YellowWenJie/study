@@ -42,8 +42,15 @@ class CircularLinkedList extends LinkedList {
           return undefined
         } else {
           const removed = this.head
-          current = this.getElementAt(this.size() -1)
+          current = this.getElementAt(this.size() - 1)
+          this.head = this.head.next
+          current.next = this.head
+          current = removed
         }
+      } else {
+        const previous = this.getElementAt(index - 1)
+        current = previous.next
+        previous.next = current.next
       }
     }
   }

@@ -1,0 +1,13 @@
+{
+  "name": "js",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "babel.config.js",
+  "scripts": {
+    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -241,4 +241,10 @@ console.log(arr.length) // 6
   console.log(a.x, b.x) // undefined, { num: 1, x: { num: 2} }
   ```
 
-先运行 a.x = a ,此时 a.x = undefined，a.num = 1，然后再运行 a = { num: 2}，a.x = { num: 2 }，所以 b 就会等于 { num: 1, x: { num: 2} }
+​		先运行 a.x = a ,此时 a.x = undefined，a.num = 1，然后再运行 a = { num: 2}，a.x = { num: 2 }，所以 b 就会等于 { num: 1, x: { num: 2} }
+
+* in `https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/in` 
+
+* console.log(new Set([...setA, ...setB]))  // 并集
+* console.log(new Set([...setA].filter(x => setB.has(x)))) // 交集
+* console.log(new Set([...setA].filter(x => !setB.has(x)))) // 差集
