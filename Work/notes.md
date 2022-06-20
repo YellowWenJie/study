@@ -248,3 +248,7 @@ console.log(arr.length) // 6
 * console.log(new Set([...setA, ...setB]))  // 并集
 * console.log(new Set([...setA].filter(x => setB.has(x)))) // 交集
 * console.log(new Set([...setA].filter(x => !setB.has(x)))) // 差集
+
+
+
+* new Set() 集合，new Map 散列表，new WeakSet 和 new WeakMap 为他们的弱化版本
