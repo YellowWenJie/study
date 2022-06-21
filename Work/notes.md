@@ -252,3 +252,11 @@ console.log(arr.length) // 6
 
 
 * new Set() 集合，new Map 散列表，new WeakSet 和 new WeakMap 为他们的弱化版本
+
+* 关于尾调用：`https://segmentfault.com/a/1190000020694801`
+
+  在正常模式下，函数内部有两个变量，可以跟踪函数的调用栈
+
+  * func.arguments：返回调用时函数的参数。
+  * func.caller：返回调用当前函数的那个函数。
+
