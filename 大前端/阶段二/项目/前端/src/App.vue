@@ -42,7 +42,9 @@
             class="layui-input"
           />
         </div>
-        <div class="layui-form-mid layui-word-aux">辅助文字</div>
+        <div class="layui-form-mid layui-word-aux">
+          http://127.0.0.1:3000/user/authcode
+        </div>
       </div>
 
       <div class="layui-form-item">
