@@ -259,4 +259,59 @@ console.log(arr.length) // 6
 
   * func.arguments：返回调用时函数的参数。
   * func.caller：返回调用当前函数的那个函数。
+  
+* Nide.js 的 Async hooks
 
+  **虽然Async hooks至此还是实验性API，但是他的确可以解决应用中的一些问题，比如日志和调用栈跟踪。本文从应用和原理方便介绍一下Node.js的Async hooks。**
+
+  `https://cloud.tencent.com/developer/article/1867052`
+
+* nest 日志配置：`https://github.com/kuangshp/nest-logs`
+
+* nest 配置静态文件
+
+  ```ts
+  // app.module.ts
+  
+  import { Module } from '@nestjs/common';
+  import { ConfigModule } from '@nestjs/config';
+  import { UserModule } from '../user/user.module';
+  import { AppController } from './app.controller';
+  import { AppService } from './app.service';
+  import { TypeOrmModule } from '@nestjs/typeorm';
+  import { MYSQL } from '../../config/database.config';
+  import { ServeStaticModule } from '@nestjs/serve-static';
+  import { join } from 'path';
+  
+  @Module({
+    imports: [
+      ConfigModule.forRoot(), // 引入 .env 文件
+      TypeOrmModule.forRoot(MYSQL), // MySql
+      ServeStaticModule.forRoot({
+        rootPath: join(__dirname, '../../', 'public'),
+      }),
+      UserModule,
+    ],
+    controllers: [AppController],
+    providers: [AppService],
+  })
+  export class AppModule {}
+  
+  ```
+
+  ```json
+  //nest-cli.json
+  
+  {
+    "$schema": "https://json.schemastore.org/nest-cli",
+    "collection": "@nestjs/schematics",
+    "sourceRoot": "src",
+    "compilerOptions": {
+      "assets": ["public/**/*"],
+      "watchAssets": true
+    }
+  }
+  
+  ```
+
+  

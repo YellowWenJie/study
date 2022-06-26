@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserService } from './user.service';
 
@@ -9,5 +9,10 @@ export class UserController {
   @Get('authcode')
   getCode(@Req() req: Request, @Res() res: Response) {
     return this.userService.getCode(req, res);
+  }
+
+  @Post('create')
+  createUser(@Body() ) {
+    return this.userService.createUser();
   }
 }
