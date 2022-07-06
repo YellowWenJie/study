@@ -314,4 +314,18 @@ console.log(arr.length) // 6
   
   ```
 
+* 函数柯里化
+
+  ```js
+  function sum (a) {
+  	return (b) => {
+  		return (c) => {
+  			return a + b + c
+  		}
+  	}
+  }
   
+  sum(1)(2)(3) // 6
+  ```
+
+* Reflect 操作对象

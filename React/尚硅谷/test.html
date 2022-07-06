@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React!</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@17/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    ></script>
+  </head>
+
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      class Login extends React.Component {
+        formData = (dataType) => {
+          console.log(dataType);
+          return (event) => {
+            console.log(event.target.value);
+          };
+        };
+        render() {
+          return (
+            <form>
+              用户名：
+              <input onChange={this.formData("username")} type="text" />
+              密码：
+              <input onChange={this.formData("password")} type="password" />
+            </form>
+          );
+        }
+      }
+      ReactDOM.render(<Login />, document.getElementById("example"));
+    </script>
+  </body>
+</html>
