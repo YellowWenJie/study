@@ -329,3 +329,73 @@ console.log(arr.length) // 6
   ```
 
 * Reflect 操作对象
+
+## TypeScript
+
+* ts 继承,这样居然不会报错。
+
+  ```ts
+  interface Base {
+    id: number;
+  }
+  interface Person extends Base {
+    name: string;
+  }
+  const sum: Person = {id: 1, name: "11"}
+  const test = (arg:Base):Base => {
+    return arg
+  }
+  test(sum)
+  ```
+
+- 自动获取类型，ts 的工具类型
+
+  ```ts
+  export const useHttp = () => {
+    const { user } = useAuth();
+    // 自动获取类型
+    return ([endpoint, config]: Parameters<typeof http>) =>
+      http(endpoint, { ...config, token: user?.token });
+  };
+  ```
+
+- 让类型都变成可选
+
+  ```ts
+  type Person = {
+    name: string;
+    age: number;
+  };
+  // 让类型都变成可选
+  const data: Partial<Person> = { name: "xiaoming" };
+  ```
+
+- 去掉类型中的一个或多个约束
+
+  ```ts
+  type Person = {
+    name: string;
+    age: number;
+    sex: string;
+  };
+  // 去掉类型中的一个或多个约束
+  const data: Omit<Person, "name" | "age"> = { sex: "man" };
+  ```
+
+- Pick 选择需要哪些类型约束
+
+  ```ts
+  // Pick 选择需要哪些类型约束
+  const data: Pick<Person, "name" | "age"> = { name: "xiaoming", age: 21 };
+  ```
+
+- 其他：`https://blog.csdn.net/qq_43869822/article/details/121664818`
+
+* css 
+
+  ```css
+    // 图片随着屏幕滑动而滑动
+    background-attachment: fixed;
+  ```
+
+  
