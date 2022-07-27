@@ -398,4 +398,12 @@ console.log(arr.length) // 6
     background-attachment: fixed;
   ```
 
+* 如何配置 ts + jest: 
+
+  `https://juejin.cn/post/6955392566992830477`
   
+* 程序执行时间，只要括号里的值一样就会计算时间
+
+  `console.time('内容')` `console.timeEnd('内容')`
+
+* 数组是一个有序结构，unshift 操作非常慢！！！
