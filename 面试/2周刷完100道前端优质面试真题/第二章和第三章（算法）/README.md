@@ -99,6 +99,10 @@
   * 复杂度是**数量级**，用 O() 表示，内部是一个函数表达式
   * 前端开发：重时间，轻空间
 
+### 如何计算时间复杂度
+
+
+
 ## 题目
 
 如何配置 ts + jest: `https://juejin.cn/post/6955392566992830477`
@@ -167,9 +171,19 @@
 > 
 > ```
 
-### 题目二：快速排序
+### 题目二：快速排序 - O(nlogn)
 
 * 用 JavaScript 实现快速排序，并说明时间复杂度
+
+> ![image-20220727162118907](https://tva1.sinaimg.cn/large/e6c9d24egy1h4lk6s0c5xj21bu0qyq57.jpg)
+>
+> ![image-20220727162203481](https://tva1.sinaimg.cn/large/e6c9d24egy1h4lk7k33waj21bu0qyq4p.jpg)
+>
+> ![image-20220727172813080](https://tva1.sinaimg.cn/large/e6c9d24egy1h4lm4e22adj21bu0qydhl.jpg)
+>
+> ![image-20220727173210335](https://tva1.sinaimg.cn/large/e6c9d24egy1h4lm8imr0uj21bu0qytbj.jpg)
+>
+> ![image-20220727173432005](https://tva1.sinaimg.cn/large/e6c9d24egy1h4lmayiucrj21bu0qydhg.jpg)
 
 ### 题目三：判断字符串是否括号匹配 - 考察栈
 
@@ -809,27 +823,246 @@ export function moveZero2(arr: number[]): void {
 
 * 如，输入 ‘abbcccddeeee1234’ ，计算得到：连续最多的字符是 ‘e'，4次
 
+> #### 传统思路
+>
+> * 嵌套循环，找出每个字符的连接次数，并记录
+> * 看似时间复杂度是 `O(n^2)`
+> * 但实际时间复杂度是`O(n)`，因为有’跳步‘
+>
+> ```ts
+> export function findContinousChar1(str: string): IRes {
+>   const res: IRes = { char: '', length: 0 }
+> 
+>   const length = str.length
+> 
+>   if (length === 0) return res
+> 
+>   let tempLength = 0
+> 
+>   for (let i = 0; i < length; i++) {
+>     tempLength = 0
+> 
+>     for (let j = i; j < length; j++) {
+>       if (str[i] === str[j]) {
+>         tempLength++
+>       }
+> 
+>       if (str[i] !== str[j] || j === length - 1) {
+>         // 不相等，或者已经到了最后一个元素，要去判断最大值
+>         if (tempLength > res.length) {
+>           res.char = str[i]
+>           res.length = tempLength
+>         }
+> 
+>         if (i < length - 1) {
+>           i = j - 1 // 跳步
+>         }
+> 
+>         break
+>       }
+>     }
+>   }
+> 
+>   return res
+> }
+> ```
 
+> ![image-20220727153325772](https://tva1.sinaimg.cn/large/e6c9d24egy1h4lisyp2fcj21bs0nowg9.jpg)
+>
+> ```ts
+> export function findContinousChar2(str: string): IRes {
+>   const res: IRes = { char: '', length: 0 }
+> 
+>   const length = str.length
+> 
+>   if (length === 0) return res
+> 
+>   let tempLength = 0
+> 
+>   let i = 0
+>   let j = 0
+>   for (; i < length; i++) {
+>     if (str[i] === str[j]) {
+>       tempLength++
+>     }
+> 
+>     if (str[i] !== str[j] || i === length - 1) {
+>       // 不相等，或者 i 到了字符串的末尾
+>       if (tempLength > res.length) {
+>         res.char = str[j]
+>         res.length = tempLength
+>       }
+> 
+>       tempLength = 0
+> 
+>       if (i < length - 1) {
+>         j = i // 让 j "追上" i
+>         i-- // 细节
+>       }
+>     }
+>   }
+> 
+>   return res
+> }
+> ```
 
+> ![image-20220727160106351](https://tva1.sinaimg.cn/large/e6c9d24egy1h4ljlqzuj8j21bu0qymzv.jpg)
 
+> ![image-20220727161857689](https://tva1.sinaimg.cn/large/e6c9d24egy1h4lk4c0lroj21bu0qydhy.jpg)
 
+### 题目十二：对称数
 
+* 求 1 - 10000 之间的所有对称数（回文）
+* 例如：0, 1, 2, 11, 22, 101, 232, 1221…
 
+> #### 思路1 - 使用数组反转、比较
+>
+> * 数组转换为字符串，再转化为数组
+> * 数组 reverse，再 join 为字符串
+> * 前后字符串进行对比
+>
+> ```ts
+> export function findPalindromeNumbers1(max: number): number[] {
+>   const res: number[] = []
+>   if (max <= 0) return res
+> 
+>   for (let i = 0; i <= max; i++) {
+>     // 转化为字符串，转化为数组，再反转，比较
+>     const s = i.toString()
+>     if (s === s.split('').reverse().join('')) {
+>       res.push(i)
+>     }
+>   }
+> 
+>   return res
+> }
+> ```
 
+> #### 思路2 - 字符串头尾比较
+>
+> * 数字转化为字符串
+> * 字符串头尾字符比较
+> * （也可以用`栈`,像括号匹配，但要注意奇偶数）
+>
+> ```ts
+> export function findPalindromeNumbers2(max: number): number[] {
+>   const res: number[] = []
+>   if (max <= 0) return res
+> 
+>   for (let i = 0; i <= max; i++) {
+>     const s = i.toString()
+>     const length = s.length
+>     // 字符串头尾比较
+>     let flag = true
+>     let startIndex = 0 // 字符串开始
+>     let endIndex = length - 1 // 字符串结束
+> 
+>     while (startIndex < endIndex) {
+>       if (s[startIndex] !== s[endIndex]) {
+>         flag = false
+>         break
+>       } else {
+>         // 继续比较
+>         startIndex++
+>         endIndex--
+>       }
+>     }
+> 
+>     if (flag) res.push(i)
+>   }
+>   return res
+> }
+> ```
 
+> #### 思路3 - 生成翻转数
+>
+> * 使用 % 和 Math.floor 生成反转数
+> * 前后数字进行对比
+> * （全程操作数字，没有字符串类型）
+>
+> ```ts
+> export function findPalindromeNumbers3(max: number): number[] {
+>   const res: number[] = []
+>   if (max <= 0) return res
+> 
+>   for (let i = 0; i <= max; i++) {
+>     let n = i
+>     let rev = 0 // 存储翻转数
+> 
+>     // 生成翻转数
+>     while (n > 0) {
+>       rev = rev * 10 + (n % 10)
+>       n = Math.floor(n / 10)
+>     }
+> 
+>     if (i === rev) res.push(i)
+>   }
+>   return res
+> }
+> ```
 
+<div style='color:red'>! ! ! 能操作数字就不操作字符串，能操作字符串就不操作数组</div>
 
+![image-20220727203937726](https://tva1.sinaimg.cn/large/e6c9d24egy1h4lrnle9ncj21bu0qy416.jpg)
 
+![image-20220727204131071](https://tva1.sinaimg.cn/large/e6c9d24egy1h4lrpio757j21bu0qyac8.jpg)
 
+### 题目十三：高效的字符串前缀匹配
 
+* 有一个英文单词库（数组），里面有几十万个英文单词
+* 输入一个字符串，**快速**判断是不是某一个单词的前缀
+* （说明思路，不用写代码）
 
+> #### 思路：
+>
+> * 第一，遍历单词库数组
+> * 第二，indexOf 判断前缀
+> * 实际时间复杂度超过了 O(n)，因为要考虑 indexOf 的计算量
 
+> #### 优化
+>
+> * 英文字母一共 26 个，可以提前把单词库数组拆份为 26 个
+> * 既然第一层拆分为 26 个，第二层，第三层，还可以继续拆分
+> * 最后把单词库拆成一棵树
 
+> #### 性能分析
+>
+> * 如遍历数组，时间复杂度至少 O(n) 起步（n 是数组长度）
+> * 而改为树，时间复杂度降低到 O(m) (m 是单词的长度)
+> * PS：哈希表(对象)通过 key 查询，时间复杂度是 O(1)
 
+![image-20220728104218518](https://tva1.sinaimg.cn/large/e6c9d24egy1h4mg0d0ypzj21b00kidhx.jpg)
 
+### 题目十四：数字千分位格式化
 
+![image-20220728104300400](https://tva1.sinaimg.cn/large/e6c9d24egy1h4mg132iqkj21bu0qyjtk.jpg)
 
+![image-20220728104330715](https://tva1.sinaimg.cn/large/e6c9d24egy1h4mg1lur21j21bu0qyjsz.jpg)
 
+![image-20220728120603337](https://tva1.sinaimg.cn/large/e6c9d24egy1h4mifjjvssj21bu0qytb7.jpg)
+
+![image-20220728120627497](https://tva1.sinaimg.cn/large/e6c9d24egy1h4mify0bqfj21bu0qydhc.jpg)
+
+### 题目十五：切换字母大小写
+
+* 输入一个字符串，切换其中字母的大小写
+* 如，输入字符串 12Abcd13C，输出字符串 12ABCD13C
+
+![image-20220728121103525](https://tva1.sinaimg.cn/large/e6c9d24egy1h4mikqgeczj21bu0qyab9.jpg)
+
+![image-20220728124724689](https://tva1.sinaimg.cn/large/e6c9d24egy1h4mjmjv0rzj21bu0qywg5.jpg)
+
+![image-20220728124836273](https://tva1.sinaimg.cn/large/e6c9d24egy1h4mjnsbh0dj214i0i8aar.jpg)
+
+### 题目十六：为何 0.1 + 0.2 !== 0.3
+
+![image-20220728125057732](https://tva1.sinaimg.cn/large/e6c9d24egy1h4mjq8x96tj21bu0qy41i.jpg)
+
+![image-20220728125632900](https://tva1.sinaimg.cn/large/e6c9d24egy1h4mjw23mrcj21bu0qytaj.jpg)
+
+# 图书推荐
+
+* 松本行弘的程序世界
 
 
 

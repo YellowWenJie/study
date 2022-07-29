@@ -2,7 +2,7 @@
  * @Author: yellowwenjie yellowwenjie@gmail.com
  * @Date: 2022-07-24 00:36:30
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-07-26 23:19:36
+ * @LastEditTime: 2022-07-28 12:29:50
  * @FilePath: /第二章/index.ts
  * @Description:
  *
@@ -17,7 +17,12 @@
 // import './给一个数组，找出其中和为 n 的俩个元素'
 // import './二叉搜索树'
 // import './斐波那契数列'
-import './将数组中的 0 移动到末尾'
+// import './将数组中的 0 移动到末尾'
+// import './字符串中连续最多的字符，以及次数'
+// import './快速排序'
+// import './对称数（回文）'
+// import './数字千分位格式化'
+import './切换字母大小写'
 
 const msg: string = '数据结构与算法'
 function getMsg() {

@@ -1,0 +1,38 @@
+<!--
+ * @Author: 黄文杰
+ * @Date: 2022-07-28 14:59:00
+ * @LastEditTime: 2022-07-28 15:07:56
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>debounce</h1>
+    搜索<input id="input1" />
+    <script>
+      function debounce(fn, delay = 200) {
+        let timer = 0
+        return function () {
+          if (timer) clearTimeout(timer)
+
+          timer = setTimeout(() => {
+            fn.apply(this, arguments)
+          }, delay)
+        }
+      }
+
+      const input1 = document.querySelector('#input1')
+      input1.addEventListener(
+        'keyup',
+        debounce(() => {
+          console.log('发起请求', input1.value)
+        })
+      )
+    </script>
+  </body>
+</html>
