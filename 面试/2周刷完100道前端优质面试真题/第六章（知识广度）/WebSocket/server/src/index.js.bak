@@ -1,0 +1,21 @@
+/*
+ * @Author: 黄文杰
+ * @Date: 2022-07-30 17:11:41
+ * @LastEditTime: 2022-07-30 17:31:58
+ */
+const { WebSocketServer } = require('ws')
+
+const wsServer = new WebSocketServer({ port: 3000 })
+
+wsServer.on('connection', ws => {
+  console.log('connected')
+
+  ws.on('message', msg => {
+    console.log('收到了消息', msg.toString())
+
+    // 服务端向客户端发送信息
+    setTimeout(() => {
+      ws.send('服务器已经收到了消息' + msg.toString())
+    }, 2000)
+  })
+})

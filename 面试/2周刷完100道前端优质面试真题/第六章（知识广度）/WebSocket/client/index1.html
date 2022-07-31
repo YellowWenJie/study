@@ -1,0 +1,36 @@
+<!--
+ * @Author: 黄文杰
+ * @Date: 2022-07-30 17:18:26
+ * @LastEditTime: 2022-07-30 18:52:34
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSocket</title>
+  </head>
+  <body>
+    <p>WebSocket 1</p>
+    <button id="btn">发送信息</button>
+    <script>
+      const ws = new WebSocket('ws://127.0.0.1:3000')
+
+      ws.onopen = () => {
+        console.log('opened')
+        ws.send('client2 opened')
+      }
+
+      ws.onmessage = event => {
+        console.log('收到了信息2', event.data)
+      }
+
+      const btnSend = document.querySelector('#btn')
+      btnSend.addEventListener('click', () => {
+        console.log('clicked2')
+        ws.send('2', Date.now())
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!--
+ * @Author: 黄文杰
+ * @Date: 2022-07-31 11:25:42
+ * @LastEditTime: 2022-07-31 11:29:47
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>
+      index page
+      <button id="but1">发送消息</button>
+
+      <iframe src="./child.html" id="iframe1"></iframe>
+
+      <script>
+        const btn1 = document.getElementById('but1')
+        btn1.addEventListener('click', () => {
+          console.log('index clicked')
+          window.iframe1.contentWindow.postMessage('hello', '*')
+        })
+
+        window.addEventListener('message', event => {
+          console.log('origin', event.origin)
+          console.log('index received', event.data)
+        })
+      </script>
+    </p>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!--
+ * @Author: 黄文杰
+ * @Date: 2022-07-31 11:25:56
+ * @LastEditTime: 2022-07-31 11:32:03
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>
+      child page
+      <button id="btn1">发送消息</button>
+    </p>
+
+    <script>
+      const btn1 = document.getElementById('btn1')
+      btn1.addEventListener('click', () => {
+        console.log('child clicked')
+        window.parent.postMessage('world', '*')
+      })
+
+      window.addEventListener('message', event => {
+        console.log('origin', event.origin)
+        console.log('child received', event.data)
+      })
+    </script>
+  </body>
+</html>
