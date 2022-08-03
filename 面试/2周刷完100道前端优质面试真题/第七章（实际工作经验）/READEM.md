@@ -242,6 +242,115 @@
 
 ![image-20220731220036852](https://tva1.sinaimg.cn/large/e6c9d24egy1h4qgh1pwutj21fi0sutbc.jpg)
 
+## 如何统一监听 Vue 组件报错
+
+> ### window.onerror
+>
+> * 全局监听所有 JS 错误
+> * 但它是 JS 级别的，识别不了 Vue 组件信息
+> * 捕捉一些 Vue 监听不到的错误
+
+> ### errorCaptured 生命周期
+>
+> * 监听所有**下级**组件的错误（自己组件监听不到）
+> * 返回 false 会阻止向上传播
+
+> ### 异步错误
+>
+> * 异步回调错误，errorHandler 监听不到
+> * 需要使用 window.onerror
+
+![image-20220801110422688](https://tva1.sinaimg.cn/large/e6c9d24egy1h4r34k4rvej21fi0sudi4.jpg)
+
+![image-20220801110444772](https://tva1.sinaimg.cn/large/e6c9d24egy1h4r34xwn10j21fi0su0uw.jpg)
+
+![image-20220801110531747](https://tva1.sinaimg.cn/large/e6c9d24egy1h4r35r1a5uj21fi0suq4f.jpg)
+
+## 如何统一监听 React 报错
+
+> ### ErrorBoundary
+>
+> * 监听所有**下级**组件报错，可降级展示 UI
+> * 只监听组件渲染时报错，不监听 DOM 事件，异常错误
+> * production 环境生效，dev 会直接抛出错误
+
+> ### 事件报错
+>
+> * ErrorBoundary 不会监听 DOM 事件报错
+> * 可用 try-catch
+> * 可用 window.onerror
+
+> ### 异步错误
+>
+> * ErrorBoundary 不会监听异步错误
+> * 需要使用 window.onerror
+
+![image-20220801122214742](https://tva1.sinaimg.cn/large/e6c9d24egy1h4r5dkrul8j21fi0sugnr.jpg)
+
+![image-20220801122324821](https://tva1.sinaimg.cn/large/e6c9d24egy1h4r5es7yqyj21fi0sudhq.jpg)
+
+## 如果一个 H5 很慢，你该如何排查性能问题？
+
+> ### [前端性能指标(页面生命周期)](https://zh.javascript.info/onload-ondomcontentloaded)
+>
+> * First Paint（FP）（第一次渲染）
+> * First Contentfu Paint（FCP）（第一次有内容的渲染）
+> * First Meaningful Paint（FMP）——以弃用，改用 LCP（第一次有意义的渲染）
+> * DomContentLoaded（DCL）（页面DOM内容渲染完成）
+> * Largest ContentFull Paint（LCP）（页面最大的内容已经渲染完成）
+> * Load（L）（外部资源已加载完成，样式已被应用，图片大小也已知了）
+>
+> > ###### Chrome devTools
+> >
+> > * Performance 可查看上述性能指标，并有网页快照
+> > * Network 可以查看各个资源的加载时间
+>
+> > ###### Lighthouse
+> >
+> > * 非常流行的第三方性能评测工具
+> > * 支持移动端和 PC
+> >
+> > ![image-20220801142947632](https://tva1.sinaimg.cn/large/e6c9d24egy1h4r92ahiuaj21fi0sujtq.jpg)
+> >
+> > ![image-20220801143015346](https://tva1.sinaimg.cn/large/e6c9d24egy1h4r92ro01uj21fi0su41n.jpg)
+>
+> > ###### 识别问题
+> >
+> > * 加载慢？
+> > * 渲染慢？
+> > * ![image-20220801143457060](https://tva1.sinaimg.cn/large/e6c9d24egy1h4r97nfh6oj21fi0suafu.jpg)
+> >
+> > ![image-20220801143517668](https://tva1.sinaimg.cn/large/e6c9d24egy1h4r9808tnij21fi0sudic.jpg)
+> >
+> > ![image-20220801143615968](https://tva1.sinaimg.cn/large/e6c9d24egy1h4r990s8mhj219m0owq54.jpg)
+> >
+> > ![image-20220801143644774](https://tva1.sinaimg.cn/large/e6c9d24egy1h4r99ikhmmj21fi0su0vl.jpg)
+> >
+> > ![image-20220801143726526](https://tva1.sinaimg.cn/large/e6c9d24egy1h4r9a8rshrj21fi0su40b.jpg)
+> >
+> > ![image-20220801143841250](https://tva1.sinaimg.cn/large/e6c9d24egy1h4r9bjlkutj21fi0sudi5.jpg)
+
+## 你工作经历中，遇到过哪些项目难点，如何解决的？
+
+> ###### 遇到问题要注意积累
+>
+> * 每个人都会遇到难题，总有几个问题让你抓耳挠腮
+> * 日常要注意积累，解决了问题就自己写网站复盘一下
+>
+> ![image-20220801144457356](https://tva1.sinaimg.cn/large/e6c9d24egy1h4r9i2dsnxj21fi0su40s.jpg)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

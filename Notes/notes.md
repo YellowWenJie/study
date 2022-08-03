@@ -330,6 +330,8 @@ console.log(arr.length) // 6
 
 * Reflect 操作对象
 
+* Object.assign()拷贝：当对象中只有一级属性，没有二级属性的时候，此方法为深拷贝，但是对象中有对象的时候，此方法，在二级属性以后就是浅拷贝
+
 ## TypeScript
 
 * ts 继承,这样居然不会报错。
