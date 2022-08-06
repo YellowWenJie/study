@@ -1,0 +1,30 @@
+<!--
+ * @Author: 黄文杰
+ * @Date: 2022-08-04 15:59:57
+ * @LastEditTime: 2022-08-04 16:31:46
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="./index.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let a, i
+      for (i = 0; i < 10; i++) {
+        a = document.createElement('li')
+        a.innerHTML = i + '<br>'
+        a.addEventListener('click', function (e) {
+          e.preventDefault()
+          alert(i)
+        })
+
+        document.body.appendChild(a)
+      }
+    </script>
+  </body>
+</html>
