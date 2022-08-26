@@ -409,3 +409,5 @@ console.log(arr.length) // 6
   `console.time('内容')` `console.timeEnd('内容')`
 
 * 数组是一个有序结构，unshift 操作非常慢！！！
+
+* 普通函数指向调用处，箭头函数指向定义处
